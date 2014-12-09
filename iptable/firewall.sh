@@ -2,12 +2,26 @@
 
 # Declare some variables
 IPT=$(which iptables)
+SPAMLIST="blockedip"
+SPAMDROPMSG="BLOCKED IP DROP"
+NET="any/0"
+DNS="8.8.8.8 8.8.4.4"
+SERV_TCP="25 53 80 443"
+SERV_UDP="53 123"
+HI_PORTS="1024:65535"
 
-INT_ETH="eth0" 
-EXT_ETH="eth1"
+INT_ETH="eth1" 
+EXT_ETH=`/sbin/route | grep -i 'default' | awk '{print $8}'`
+
+echo "Starting IPv4 Wall..."
 
 # Delete all existing rules
 $IPT -F
+$IPT -X
+$IPT -t nat -F
+$IPT -t nat -X
+$IPT -t mangle -F
+$IPT -t mangle -X
 
 # Set default chain policies
 $IPT -P INPUT DROP
