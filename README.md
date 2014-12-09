@@ -3,4 +3,4 @@ sysadmin
 
 All good thing for a linux sysadmin
 
-- kienkennedy
+- iptable, firewall script for protecting the system
